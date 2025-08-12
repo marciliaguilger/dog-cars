@@ -3,13 +3,14 @@ package com.dog.cars.domain.model
 import java.math.BigDecimal
 import java.util.*
 
-class Car (
+data class Car (
         val id: UUID,
         val brand: String,
         val model: String,
         val year: Int,
         val color: String,
-        val price: BigDecimal
+        val price: BigDecimal,
+        val available: Boolean
 ) {
     companion object {
         fun create(
@@ -17,7 +18,8 @@ class Car (
             model: String,
             year: Int,
             color: String,
-            price: BigDecimal
+            price: BigDecimal,
+            available: Boolean
         ): Car {
             return Car(
                 id = UUID.randomUUID(),
@@ -25,18 +27,19 @@ class Car (
                 model = model,
                 year = year,
                 color = color,
-                price = price
+                price = price,
+                available = available
             )
         }
     }
-
 
     fun update(
         brand: String? = null,
         model: String? = null,
         year: Int? = null,
         color: String? = null,
-        price: BigDecimal? = null
+        price: BigDecimal? = null,
+        available: Boolean? = null
     ): Car {
         return Car(
             id = this.id,
@@ -44,7 +47,16 @@ class Car (
             model = model ?: this.model,
             year = year ?: this.year,
             color = color ?: this.color,
-            price = price ?: this.price
+            price = price ?: this.price,
+            available = available ?: this.available
         )
+    }
+
+    fun sell(): Car {
+        if (!available) {
+            throw IllegalStateException("Car is already sold")
+        }
+
+        return this.copy(available = false)
     }
 }
