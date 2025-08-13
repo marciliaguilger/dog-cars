@@ -4,7 +4,10 @@ import com.dog.cars.domain.model.Sale
 import com.dog.cars.domain.repository.SaleRepository
 import com.dog.cars.infrastructure.persistence.mapper.toDomain
 import com.dog.cars.infrastructure.persistence.mapper.toSaleModel
+import org.springframework.stereotype.Repository
+import java.util.UUID
 
+@Repository
 class SaleRepositoryImpl(
     private val saleJpaRepository: SaleJpaRepository
 ): SaleRepository {
@@ -12,7 +15,7 @@ class SaleRepositoryImpl(
         saleJpaRepository.save(sale.toSaleModel())
     }
 
-    override fun findByCarId(carId: String): Sale? {
+    override fun findByCarId(carId: UUID): Sale? {
         return saleJpaRepository.findByCarId(carId)?.toDomain()
     }
 

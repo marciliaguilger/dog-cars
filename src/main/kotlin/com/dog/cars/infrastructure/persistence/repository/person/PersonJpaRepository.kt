@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface PersonJpaRepository: JpaRepository<PersonModel, String> {
     fun findByDocument(document: String): PersonModel?
-
 }
