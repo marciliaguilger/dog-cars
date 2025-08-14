@@ -1,4 +1,4 @@
-package com.dog.cars.presentation.dto
+package com.dog.cars.presentation.car.dto
 
 import com.dog.cars.domain.model.Car
 import java.math.BigDecimal
@@ -10,7 +10,9 @@ data class CarOutput (
     val model: String,
     val year: Int,
     val color: String,
-    val price: BigDecimal
+    val price: BigDecimal,
+    val available: Boolean,
+    val saleId: UUID?
 )
 
 fun Car.toOutput(): CarOutput {
@@ -20,6 +22,8 @@ fun Car.toOutput(): CarOutput {
         model = model,
         year = year,
         color = color,
-        price = price
+        price = price,
+        available = available,
+        saleId = saleId
     )
 }

@@ -21,7 +21,7 @@ class CarRepositoryImpl(
         return carJpaRepository.findByIdOrNull(id)?.toCar()
     }
 
-    override fun getAll(): Collection<Car> {
-        return carJpaRepository.findAll().map { it.toCar() }
+    override fun getAll(available: Boolean): Collection<Car> {
+        return carJpaRepository.findByAvailable(available).map { it.toCar() }
     }
 }

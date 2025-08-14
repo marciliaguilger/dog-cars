@@ -1,27 +1,20 @@
-package com.dog.cars.presentation.controller.car
+package com.dog.cars.presentation.sale.controller
 
 import com.dog.cars.domain.usecase.SellCarUseCase
-import com.dog.cars.domain.usecase.UpdateCarUseCase
-import com.dog.cars.presentation.dto.*
+import com.dog.cars.presentation.sale.dto.CarSellInput
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
-@RestController("cars")
-class CarController(
-    private val updateCarUseCase: UpdateCarUseCase,
+@RestController
+@RequestMapping("/sales")
+class SaleController(
     private val sellCarUseCase: SellCarUseCase
 ) {
-
-    @PostMapping
-    fun upsertCar(@RequestBody body: CarInput): CarOutput {
-        val car = updateCarUseCase.execute(body.toDomain())
-        return car.toOutput()
-    }
-
-    @PostMapping("{id}/sell")
+    @PostMapping("/cars/{id}")
     fun sellCar(@RequestParam id: UUID, @RequestBody body: CarSellInput) {
         sellCarUseCase.execute(id, body.buyerDocument, body.saleDate, body.discountAmount)
     }

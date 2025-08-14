@@ -4,15 +4,16 @@ import com.dog.cars.domain.repository.CarRepository
 import com.dog.cars.domain.repository.PersonRepository
 import com.dog.cars.domain.repository.SaleRepository
 import com.dog.cars.domain.usecase.SellCarUseCase
-import com.dog.cars.domain.usecase.UpdateCarUseCase
+import com.dog.cars.domain.usecase.ManageCarUseCase
+import com.dog.cars.domain.usecase.ManageCustomerUseCase
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class UseCaseConfiguration {
     @Bean
-    fun updateCarUseCase(carRepository: CarRepository): UpdateCarUseCase {
-        return UpdateCarUseCase(carRepository)
+    fun manageCarUseCase(carRepository: CarRepository): ManageCarUseCase {
+        return ManageCarUseCase(carRepository)
     }
 
     @Bean
@@ -22,5 +23,12 @@ class UseCaseConfiguration {
         saleRepository: SaleRepository
     ): SellCarUseCase {
         return SellCarUseCase(carRepository, personRepository, saleRepository)
+    }
+
+    @Bean
+    fun manageCustomerUseCase(
+        personRepository: PersonRepository
+    ): ManageCustomerUseCase {
+        return ManageCustomerUseCase(personRepository)
     }
 }

@@ -1,4 +1,4 @@
-package com.dog.cars.presentation.dto
+package com.dog.cars.presentation.car.dto
 
 import com.dog.cars.domain.model.Car
 import java.math.BigDecimal

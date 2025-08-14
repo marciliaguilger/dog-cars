@@ -10,7 +10,8 @@ data class Car (
         val year: Int,
         val color: String,
         val price: BigDecimal,
-        val available: Boolean
+        val available: Boolean,
+        val saleId: UUID? = null,
 ) {
     companion object {
         fun create(
@@ -52,11 +53,11 @@ data class Car (
         )
     }
 
-    fun sell(): Car {
+    fun sell(saleId: UUID?): Car {
         if (!available) {
             throw IllegalStateException("Car is already sold")
         }
 
-        return this.copy(available = false)
+        return this.copy(available = false, saleId = saleId)
     }
 }

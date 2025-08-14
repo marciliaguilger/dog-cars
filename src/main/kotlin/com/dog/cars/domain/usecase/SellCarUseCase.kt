@@ -32,9 +32,10 @@ class SellCarUseCase(
             name = person.name,
         )
 
-        car.sell()
-
         val sale = createSale(car, buyer, saleDate, discountAmount)
+
+        car.sell(sale.id)
+
         carRepository.upsert(car)
         saleRepository.save(sale)
 

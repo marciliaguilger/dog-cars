@@ -1,4 +1,4 @@
-package com.dog.cars.presentation.dto
+package com.dog.cars.presentation.sale.dto
 
 import java.math.BigDecimal
 import java.time.LocalDateTime

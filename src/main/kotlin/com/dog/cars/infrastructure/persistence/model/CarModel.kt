@@ -16,5 +16,6 @@ data class CarModel(
     val year: Int,
     val color: String,
     val price: BigDecimal,
-    val available: Boolean
+    val available: Boolean,
+    val saleId: UUID?
 )
