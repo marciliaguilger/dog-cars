@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dog-cars-config
+data:
+  AWS_REGION: us-east-1
+  DB_NAME: DogCar
+  DB_PORT: "5432"
+  DB_USER: docker
+  DB_PASSWORD: docker
+  DB_HOST: pg

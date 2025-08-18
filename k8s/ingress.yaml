@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dog-cars-ingress
+spec:
+  rules:
+    - host: dog-cars.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dog-cars-service
+                port:
+                  number: 80
