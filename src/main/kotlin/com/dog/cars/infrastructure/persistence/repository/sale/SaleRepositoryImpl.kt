@@ -23,4 +23,9 @@ class SaleRepositoryImpl(
         return saleJpaRepository.findAllByCustomerDocument(customerDocument)
             .map { it.toDomain() }
     }
+
+    override fun findAll(): Collection<Sale> {
+        return  saleJpaRepository.findAll()
+            .map { it.toDomain() }
+    }
 }

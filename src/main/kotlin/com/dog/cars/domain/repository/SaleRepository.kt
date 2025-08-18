@@ -7,4 +7,5 @@ interface SaleRepository {
     fun save(sale: Sale)
     fun findByCarId(carId: UUID): Sale?
     fun findByCustomerDocument(customerDocument: String): Collection<Sale>
+    fun findAll(): Collection<Sale>
 }

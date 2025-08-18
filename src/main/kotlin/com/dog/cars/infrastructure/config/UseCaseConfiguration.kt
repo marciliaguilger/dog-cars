@@ -3,7 +3,7 @@ package com.dog.cars.infrastructure.config
 import com.dog.cars.domain.repository.CarRepository
 import com.dog.cars.domain.repository.PersonRepository
 import com.dog.cars.domain.repository.SaleRepository
-import com.dog.cars.domain.usecase.SellCarUseCase
+import com.dog.cars.domain.usecase.SaleCarUseCase
 import com.dog.cars.domain.usecase.ManageCarUseCase
 import com.dog.cars.domain.usecase.ManageCustomerUseCase
 import org.springframework.context.annotation.Bean
@@ -21,8 +21,8 @@ class UseCaseConfiguration {
         carRepository: CarRepository,
         personRepository: PersonRepository,
         saleRepository: SaleRepository
-    ): SellCarUseCase {
-        return SellCarUseCase(carRepository, personRepository, saleRepository)
+    ): SaleCarUseCase {
+        return SaleCarUseCase(carRepository, personRepository, saleRepository)
     }
 
     @Bean

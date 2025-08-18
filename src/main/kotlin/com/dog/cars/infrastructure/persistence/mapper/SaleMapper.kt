@@ -9,7 +9,8 @@ fun SaleModel.toDomain(): Sale {
         carId = carId,
         customerDocument = customerDocument,
         saleDate = saleDate,
-        salePrice = salePrice
+        salePrice = salePrice,
+        discount = discount
     )
 }
 
@@ -19,6 +20,7 @@ fun Sale.toSaleModel(): SaleModel {
         carId = carId,
         customerDocument = customerDocument,
         saleDate = saleDate,
-        salePrice = salePrice
+        salePrice = salePrice,
+        discount = discount
     )
 }

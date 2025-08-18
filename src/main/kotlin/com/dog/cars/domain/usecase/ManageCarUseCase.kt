@@ -13,6 +13,6 @@ class ManageCarUseCase (
     }
 
     fun getCars(available: Boolean = true): Collection<Car> {
-        return carRepository.getAll(available)
+        return carRepository.getAll(available).sortedBy { it.price }
     }
 }

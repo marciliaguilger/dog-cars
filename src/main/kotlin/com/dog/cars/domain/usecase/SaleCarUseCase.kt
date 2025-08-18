@@ -11,12 +11,12 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.UUID
 
-class SellCarUseCase(
+class SaleCarUseCase(
     private val carRepository: CarRepository,
     private val personRepository: PersonRepository,
     private val saleRepository: SaleRepository
 ) {
-    fun execute(carId: UUID, buyerDocument: String, saleDate: LocalDateTime, discountAmount: BigDecimal) {
+    fun sale(carId: UUID, buyerDocument: String, saleDate: LocalDateTime, discountAmount: BigDecimal) {
         val car = carRepository.getById(carId)
             ?: throw IllegalArgumentException("Car with id $carId not found")
 
@@ -34,11 +34,22 @@ class SellCarUseCase(
 
         val sale = createSale(car, buyer, saleDate, discountAmount)
 
-        car.sell(sale.id)
+        val soldCar = car.sell(sale.id)
 
-        carRepository.upsert(car)
+        carRepository.upsert(soldCar)
         saleRepository.save(sale)
 
+    }
+
+    fun getAll(): Collection<Sale> {
+        return saleRepository.findAll()
+    }
+
+    fun getByCustomerDocument(customerDocument: String): Collection<Sale> {
+        if (customerDocument.isBlank()) {
+            throw IllegalArgumentException("Buyer document cannot be blank")
+        }
+        return saleRepository.findByCustomerDocument(customerDocument)
     }
 
     private fun createSale(car: Car, buyer: Person, saleDate: LocalDateTime, discount: BigDecimal): Sale {
@@ -52,7 +63,8 @@ class SellCarUseCase(
             carId = car.id,
             customerDocument = buyer.document,
             saleDate = saleDate,
-            salePrice = salePrice
+            salePrice = salePrice,
+            discount = discount
         )
     }
 

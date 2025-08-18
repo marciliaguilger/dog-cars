@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
 
-data class CarSellInput (
+data class CarSaleInput (
     val carId: UUID,
     val discountAmount: BigDecimal,
     val buyerDocument: String,

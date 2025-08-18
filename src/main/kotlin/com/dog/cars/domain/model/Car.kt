@@ -11,7 +11,7 @@ data class Car (
         val color: String,
         val price: BigDecimal,
         val available: Boolean,
-        val saleId: UUID? = null,
+        val saleId: UUID?,
 ) {
     companion object {
         fun create(
@@ -29,7 +29,8 @@ data class Car (
                 year = year,
                 color = color,
                 price = price,
-                available = available
+                available = available,
+                saleId = null
             )
         }
     }
@@ -49,7 +50,8 @@ data class Car (
             year = year ?: this.year,
             color = color ?: this.color,
             price = price ?: this.price,
-            available = available ?: this.available
+            available = available ?: this.available,
+            saleId = this.saleId
         )
     }
 

@@ -15,5 +15,6 @@ class SaleModel(
     val carId: UUID,
     val customerDocument: String,
     val saleDate: LocalDateTime,
-    val salePrice: BigDecimal
+    val salePrice: BigDecimal,
+    val discount: BigDecimal
 )
