@@ -24,6 +24,7 @@ fun CarModel.toCar(): Car {
         this.year,
         this.color,
         this.price,
-        this.available
+        this.available,
+        this.saleId
     )
 }
