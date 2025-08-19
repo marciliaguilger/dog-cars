@@ -1,6 +1,6 @@
 package com.dog.cars.infrastructure.persistence.mapper
 
-import com.dog.cars.domain.model.Sale
+import com.dog.cars.domain.car.model.Sale
 import com.dog.cars.infrastructure.persistence.model.SaleModel
 
 fun SaleModel.toDomain(): Sale {
@@ -10,7 +10,8 @@ fun SaleModel.toDomain(): Sale {
         customerDocument = customerDocument,
         saleDate = saleDate,
         salePrice = salePrice,
-        discount = discount
+        discount = discount,
+        status = status
     )
 }
 
@@ -21,6 +22,7 @@ fun Sale.toSaleModel(): SaleModel {
         customerDocument = customerDocument,
         saleDate = saleDate,
         salePrice = salePrice,
-        discount = discount
+        discount = discount,
+        status = status
     )
 }

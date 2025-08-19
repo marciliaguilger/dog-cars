@@ -1,6 +1,7 @@
 package com.dog.cars.presentation.sale.controller
 
-import com.dog.cars.domain.usecase.SaleCarUseCase
+import com.dog.cars.domain.car.usecase.SaleCarUseCase
+import com.dog.cars.domain.payments.usecase.PaymentUseCase
 import com.dog.cars.presentation.sale.dto.CarSaleOutput
 import com.dog.cars.presentation.sale.dto.CarSaleInput
 import com.dog.cars.presentation.sale.dto.toSaleOutput
@@ -10,11 +11,17 @@ import java.util.*
 @RestController
 @RequestMapping("/sales")
 class SaleController(
-    private val saleCarUseCase: SaleCarUseCase
+    private val saleCarUseCase: SaleCarUseCase,
+    private val paymentUseCase: PaymentUseCase
 ) {
     @PostMapping("/cars/{id}")
-    fun sellCar(@RequestParam id: UUID, @RequestBody body: CarSaleInput) {
+    fun createOrder(@RequestParam id: UUID, @RequestBody body: CarSaleInput) {
         saleCarUseCase.sale(id, body.buyerDocument, body.saleDate, body.discountAmount)
+    }
+
+    @PutMapping("{saleId}")
+    fun payOrder(@PathVariable saleId: UUID) {
+        paymentUseCase.pay(saleId)
     }
 
     @GetMapping()

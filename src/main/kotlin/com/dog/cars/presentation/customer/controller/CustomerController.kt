@@ -1,6 +1,6 @@
 package com.dog.cars.presentation.customer.controller
 
-import com.dog.cars.domain.usecase.ManageCustomerUseCase
+import com.dog.cars.domain.person.usecase.ManageCustomerUseCase
 import com.dog.cars.presentation.customer.dto.CustomerInput
 import com.dog.cars.presentation.customer.dto.CustomerOutput
 import com.dog.cars.presentation.customer.dto.toCustomerOutput

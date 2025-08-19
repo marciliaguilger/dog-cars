@@ -1,6 +1,6 @@
-package com.dog.cars.domain.usecase
+package com.dog.cars.domain.car.usecase
 
-import com.dog.cars.domain.model.Car
+import com.dog.cars.domain.car.model.Car
 import com.dog.cars.domain.repository.CarRepository
 
 class ManageCarUseCase (

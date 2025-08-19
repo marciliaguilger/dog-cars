@@ -1,6 +1,6 @@
-package com.dog.cars.domain.usecase
+package com.dog.cars.domain.person.usecase
 
-import com.dog.cars.domain.model.Person
+import com.dog.cars.domain.person.model.Person
 import com.dog.cars.domain.repository.PersonRepository
 
 class ManageCustomerUseCase(

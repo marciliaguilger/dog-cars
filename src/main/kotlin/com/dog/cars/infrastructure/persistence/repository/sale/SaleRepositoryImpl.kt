@@ -1,6 +1,6 @@
 package com.dog.cars.infrastructure.persistence.repository.sale
 
-import com.dog.cars.domain.model.Sale
+import com.dog.cars.domain.car.model.Sale
 import com.dog.cars.domain.repository.SaleRepository
 import com.dog.cars.infrastructure.persistence.mapper.toDomain
 import com.dog.cars.infrastructure.persistence.mapper.toSaleModel
@@ -22,6 +22,12 @@ class SaleRepositoryImpl(
     override fun findByCustomerDocument(customerDocument: String): Collection<Sale> {
         return saleJpaRepository.findAllByCustomerDocument(customerDocument)
             .map { it.toDomain() }
+    }
+
+    override fun findById(id: UUID): Sale {
+        return saleJpaRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("Sale with id $id not found") }
+            .toDomain()
     }
 
     override fun findAll(): Collection<Sale> {

@@ -1,4 +1,4 @@
-package com.dog.cars.domain.model
+package com.dog.cars.domain.person.model
 
 open class Person (
     val document: String,

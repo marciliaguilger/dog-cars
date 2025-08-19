@@ -1,6 +1,6 @@
 package com.dog.cars.infrastructure.persistence.mapper
 
-import com.dog.cars.domain.model.Person
+import com.dog.cars.domain.person.model.Person
 import com.dog.cars.infrastructure.persistence.model.PersonModel
 
 fun PersonModel.toDomain(): Person {

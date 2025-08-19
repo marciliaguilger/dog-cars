@@ -1,6 +1,6 @@
 package com.dog.cars.presentation.customer.dto
 
-import com.dog.cars.domain.model.Person
+import com.dog.cars.domain.person.model.Person
 
 data class CustomerInput (
     val name: String,

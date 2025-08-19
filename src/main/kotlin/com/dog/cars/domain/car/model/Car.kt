@@ -1,4 +1,4 @@
-package com.dog.cars.domain.model
+package com.dog.cars.domain.car.model
 
 import java.math.BigDecimal
 import java.util.*

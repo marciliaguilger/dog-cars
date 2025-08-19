@@ -1,6 +1,6 @@
 package com.dog.cars.presentation.car.dto
 
-import com.dog.cars.domain.model.Car
+import com.dog.cars.domain.car.model.Car
 import java.math.BigDecimal
 import java.util.*
 

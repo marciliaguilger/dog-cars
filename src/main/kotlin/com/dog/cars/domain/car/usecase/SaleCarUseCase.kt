@@ -1,9 +1,10 @@
-package com.dog.cars.domain.usecase
+package com.dog.cars.domain.car.usecase
 
-import com.dog.cars.domain.model.Buyer
-import com.dog.cars.domain.model.Car
-import com.dog.cars.domain.model.Person
-import com.dog.cars.domain.model.Sale
+import com.dog.cars.domain.car.enum.SaleStatus
+import com.dog.cars.domain.person.model.Buyer
+import com.dog.cars.domain.car.model.Car
+import com.dog.cars.domain.person.model.Person
+import com.dog.cars.domain.car.model.Sale
 import com.dog.cars.domain.repository.CarRepository
 import com.dog.cars.domain.repository.PersonRepository
 import com.dog.cars.domain.repository.SaleRepository
@@ -14,7 +15,7 @@ import java.util.UUID
 class SaleCarUseCase(
     private val carRepository: CarRepository,
     private val personRepository: PersonRepository,
-    private val saleRepository: SaleRepository
+    private val saleRepository: SaleRepository,
 ) {
     fun sale(carId: UUID, buyerDocument: String, saleDate: LocalDateTime, discountAmount: BigDecimal) {
         val car = carRepository.getById(carId)
@@ -41,6 +42,8 @@ class SaleCarUseCase(
 
     }
 
+
+
     fun getAll(): Collection<Sale> {
         return saleRepository.findAll()
     }
@@ -64,7 +67,8 @@ class SaleCarUseCase(
             customerDocument = buyer.document,
             saleDate = saleDate,
             salePrice = salePrice,
-            discount = discount
+            discount = discount,
+            status = SaleStatus.CREATED
         )
     }
 
