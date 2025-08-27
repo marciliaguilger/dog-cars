@@ -1,6 +1,6 @@
 package com.dog.cars.infrastructure.persistence.model
 
-import com.dog.cars.domain.car.enum.SaleStatus
+import com.dog.cars.domain.sales.enum.SaleStatus
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table

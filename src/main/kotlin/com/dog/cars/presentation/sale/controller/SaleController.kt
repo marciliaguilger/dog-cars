@@ -1,10 +1,8 @@
 package com.dog.cars.presentation.sale.controller
 
-import com.dog.cars.domain.car.usecase.SaleCarUseCase
+import com.dog.cars.domain.sales.usecase.SaleCarUseCase
 import com.dog.cars.domain.payments.usecase.PaymentUseCase
-import com.dog.cars.presentation.sale.dto.CarSaleOutput
-import com.dog.cars.presentation.sale.dto.CarSaleInput
-import com.dog.cars.presentation.sale.dto.toSaleOutput
+import com.dog.cars.presentation.sale.dto.*
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -20,8 +18,8 @@ class SaleController(
     }
 
     @PutMapping("{saleId}")
-    fun payOrder(@PathVariable saleId: UUID) {
-        paymentUseCase.pay(saleId)
+    fun payOrder(@PathVariable saleId: UUID, @RequestBody body: CarSalePaymentInput): CarSalePaymentOutput {
+        return paymentUseCase.pay(saleId, body.paymentType).toCarSalePaymentOutput()
     }
 
     @GetMapping()

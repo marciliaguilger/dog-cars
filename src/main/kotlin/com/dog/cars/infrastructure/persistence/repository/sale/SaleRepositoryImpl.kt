@@ -1,6 +1,6 @@
 package com.dog.cars.infrastructure.persistence.repository.sale
 
-import com.dog.cars.domain.car.model.Sale
+import com.dog.cars.domain.sales.model.Sale
 import com.dog.cars.domain.repository.SaleRepository
 import com.dog.cars.infrastructure.persistence.mapper.toDomain
 import com.dog.cars.infrastructure.persistence.mapper.toSaleModel

@@ -1,10 +1,10 @@
-package com.dog.cars.domain.car.usecase
+package com.dog.cars.domain.sales.usecase
 
-import com.dog.cars.domain.car.enum.SaleStatus
+import com.dog.cars.domain.sales.enum.SaleStatus
 import com.dog.cars.domain.person.model.Buyer
 import com.dog.cars.domain.car.model.Car
 import com.dog.cars.domain.person.model.Person
-import com.dog.cars.domain.car.model.Sale
+import com.dog.cars.domain.sales.model.Sale
 import com.dog.cars.domain.repository.CarRepository
 import com.dog.cars.domain.repository.PersonRepository
 import com.dog.cars.domain.repository.SaleRepository

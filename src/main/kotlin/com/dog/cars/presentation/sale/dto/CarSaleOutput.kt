@@ -1,6 +1,6 @@
 package com.dog.cars.presentation.sale.dto
 
-import com.dog.cars.domain.car.model.Sale
+import com.dog.cars.domain.sales.model.Sale
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*

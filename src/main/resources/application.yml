@@ -1,0 +1,25 @@
+mercadopago:
+  collectorId: '188272254'
+  clientId: YOUR_CLIENT_ID
+  webhookSecret: dd755ff688b85c0d236309d3fa1318c989619bbdd0fe30a6f11762f3429a9045
+  clientSecret: YOUR_CLIENT_SECRET
+  accessToken: TEST-7838913297242962-081820-73076caecabc290275e3775f30a8df9d-188272254
+  baseUrl: https://api.mercadopago.com
+  posExternalId: ''
+  redirectUri: ''
+spring:
+  application:
+    name: cars
+  datasource:
+    password: docker
+    driver-class-name: org.postgresql.Driver
+    username: docker
+    url: jdbc:postgresql://localhost:5432/DogCar
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+    properties:
+      hibernate:
+        format_sql: 'true'
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

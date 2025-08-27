@@ -12,7 +12,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(18)
 	}
 }
 
@@ -22,6 +22,7 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.postgresql:postgresql")
 	implementation("org.springframework.boot:spring-boot-starter-web")

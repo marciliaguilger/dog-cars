@@ -5,7 +5,10 @@ import java.util.*
 
 data class Payment(
     val totalAmount:  BigDecimal,
+    val status: PaymentStatus,
     val description: String,
     val saleId: UUID,
+    val type: PaymentType,
+    val qrCode: String?,
     val items: List<PaymentItem>,
 )

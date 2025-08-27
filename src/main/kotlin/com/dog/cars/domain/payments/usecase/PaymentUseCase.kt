@@ -1,8 +1,10 @@
 package com.dog.cars.domain.payments.usecase
 
-import com.dog.cars.domain.car.enum.SaleStatus
+import com.dog.cars.domain.sales.enum.SaleStatus
 import com.dog.cars.domain.payments.model.Payment
 import com.dog.cars.domain.payments.model.PaymentItem
+import com.dog.cars.domain.payments.model.PaymentStatus
+import com.dog.cars.domain.payments.model.PaymentType
 import com.dog.cars.domain.payments.service.PixPaymentService
 import com.dog.cars.domain.repository.CarRepository
 import com.dog.cars.domain.repository.PersonRepository
@@ -16,7 +18,7 @@ class PaymentUseCase(
 
 ) {
 
-    fun pay(saleId: UUID) {
+    fun pay(saleId: UUID, paymentType: PaymentType): Payment {
         val sale = saleRepository.findById(saleId)
 
         if (sale.status != SaleStatus.CREATED) {
@@ -28,8 +30,11 @@ class PaymentUseCase(
 
         val payment = Payment(
             totalAmount = sale.salePrice,
+            status = PaymentStatus.CREATED,
             description = "Payment for sale ${sale.id} by ${customer.name}",
             saleId = sale.id,
+            type = paymentType,
+            qrCode = "",
             items = listOf(PaymentItem(
                 id = sale.carId,
                 title = "Sale of car ${sale.carId}",
@@ -40,8 +45,12 @@ class PaymentUseCase(
 
         val pixPaymentResponse = pixPaymentService.generateQrCode(payment)
 
-        val updatedSale = sale.copy(status = SaleStatus.APPROVED)
+        val updatedPayment = payment.copy(qrCode = pixPaymentResponse.pixKey)
+
+        val updatedSale = sale.copy(status = SaleStatus.WAITING_PAYMENT, payment = updatedPayment)
 
         saleRepository.save(updatedSale)
+
+        return updatedPayment
     }
 }

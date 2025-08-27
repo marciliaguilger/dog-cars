@@ -1,6 +1,6 @@
 package com.dog.cars.domain.repository
 
-import com.dog.cars.domain.car.model.Sale
+import com.dog.cars.domain.sales.model.Sale
 import java.util.UUID
 
 interface SaleRepository {
