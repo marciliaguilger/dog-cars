@@ -45,23 +45,23 @@ class PaymentGatewayImpl(
             title = "Venda de Carro",
             description = payment.description,
             notificationUrl = null, // TODO: Configurar URL de notificação
-            totalAmount = payment.totalAmount.toInt(),
+            totalAmount = payment.totalAmount,
             items = payment.items.map { item ->
                 DynamicQrItem(
                     skuNumber = item.id.toString(),
                     category = "automotive",
                     title = item.title,
                     description = "Venda de veículo",
-                    unitPrice = item.unitPrice.toInt(),
+                    unitPrice = item.unitPrice,
                     quantity = item.quantity,
                     unitMeasure = "unidade",
-                    totalAmount = (item.unitPrice * item.quantity.toBigDecimal()).toInt()
+                    totalAmount = (item.unitPrice * item.quantity.toBigDecimal())
                 )
             },
             sponsor = DynamicQrSponsor(
                 id = mercadoPagoProperties.clientId.toLongOrNull() ?: 0L
             ),
-            cashOut = DynamicQrCashOut(amount = 0)
+            cashOut = DynamicQrCashOut(amount = java.math.BigDecimal.ZERO)
         )
     }
 }

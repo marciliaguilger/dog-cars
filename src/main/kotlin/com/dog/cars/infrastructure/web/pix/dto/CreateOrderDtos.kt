@@ -2,6 +2,7 @@ package com.dog.cars.infrastructure.web.pix.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.math.BigDecimal
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class CreateDynamicQrOrderRequest(
@@ -9,7 +10,7 @@ data class CreateDynamicQrOrderRequest(
     @JsonProperty("title") val title: String?,
     @JsonProperty("description") val description: String?,
     @JsonProperty("notification_url") val notificationUrl: String?,
-    @JsonProperty("total_amount") val totalAmount: Int,
+    @JsonProperty("total_amount") val totalAmount: BigDecimal,
     @JsonProperty("items") val items: List<DynamicQrItem>?,
     @JsonProperty("sponsor") val sponsor: DynamicQrSponsor?,
     @JsonProperty("cash_out") val cashOut: DynamicQrCashOut?
@@ -20,10 +21,10 @@ data class DynamicQrItem(
     @JsonProperty("category") val category: String?,
     @JsonProperty("title") val title: String,
     @JsonProperty("description") val description: String?,
-    @JsonProperty("unit_price") val unitPrice: Int,
+    @JsonProperty("unit_price") val unitPrice: BigDecimal,
     @JsonProperty("quantity") val quantity: Int,
     @JsonProperty("unit_measure") val unitMeasure: String,
-    @JsonProperty("total_amount") val totalAmount: Int
+    @JsonProperty("total_amount") val totalAmount: BigDecimal
 )
 
 data class DynamicQrSponsor(
@@ -31,7 +32,7 @@ data class DynamicQrSponsor(
 )
 
 data class DynamicQrCashOut(
-    @JsonProperty("amount") val amount: Int
+    @JsonProperty("amount") val amount: BigDecimal
 )
 
 data class CreateDynamicQrOrderResponse(
