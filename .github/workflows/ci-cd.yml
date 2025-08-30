@@ -35,9 +35,12 @@ jobs:
       - name: Check if JAR was created
         run: |
           ls -la build/libs/
-          if [ ! -f "build/libs/*.jar" ]; then
+          if [ $(find build/libs -name "*.jar" | wc -l) -eq 0 ]; then
             echo "JAR file not found!"
             exit 1
+          else
+            echo "JAR file found:"
+            find build/libs -name "*.jar"
           fi
 
       - name: Setup Gradle
