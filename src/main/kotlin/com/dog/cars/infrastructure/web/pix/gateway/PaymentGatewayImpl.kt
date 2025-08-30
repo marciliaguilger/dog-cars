@@ -8,7 +8,6 @@ import com.dog.cars.infrastructure.config.MercadoPagoProperties
 import com.dog.cars.infrastructure.web.pix.dto.*
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.*
 
 @Service
 class PaymentGatewayImpl(
@@ -17,6 +16,17 @@ class PaymentGatewayImpl(
 ): PaymentGateway {
     
     override fun pixPaymentGenerateQrCode(payment: Payment): PixQrCodePayment {
+        if(true) {
+            return PixQrCodePayment(
+                pixKey = "00020126360014BR.GOV.BCB.PIX0114+55219999999952040000530398654041.005802BR5925Nome do Recebedor6009RIO DE JANEIRO61080540900062070503***63041D3D",
+                createdDate = LocalDateTime.now(),
+                status = "PENDING",
+                type = "qr",
+                totalAmount = payment.totalAmount,
+                externalSaleId = payment.saleId
+            )
+        }
+
         val orderRequest = createRequest(payment)
 
         val response = mercadoPagoOrderQrClient.createDynamicQrOrder(

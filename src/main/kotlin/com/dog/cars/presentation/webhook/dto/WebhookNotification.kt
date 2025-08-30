@@ -8,5 +8,6 @@ data class WebhookNotification(
 )
 
 data class WebhookData(
-    @JsonProperty("id") val id: String
+    @JsonProperty("id") val id: String,
+    @JsonProperty("situation") val situation: String
 )

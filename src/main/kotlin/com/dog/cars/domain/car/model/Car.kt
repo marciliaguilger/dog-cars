@@ -35,31 +35,16 @@ data class Car (
         }
     }
 
-    fun update(
-        brand: String? = null,
-        model: String? = null,
-        year: Int? = null,
-        color: String? = null,
-        price: BigDecimal? = null,
-        available: Boolean? = null
-    ): Car {
-        return Car(
-            id = this.id,
-            brand = brand ?: this.brand,
-            model = model ?: this.model,
-            year = year ?: this.year,
-            color = color ?: this.color,
-            price = price ?: this.price,
-            available = available ?: this.available,
-            saleId = this.saleId
-        )
-    }
 
-    fun sell(saleId: UUID?): Car {
+    fun sell(saleId: UUID?, finalPrice: BigDecimal): Car {
         if (!available) {
             throw IllegalStateException("Car is already sold")
         }
 
-        return this.copy(available = false, saleId = saleId)
+        return this.copy(available = false, saleId = saleId, price = finalPrice)
+    }
+
+    fun undoSale(): Car {
+        return this.copy(available = true, saleId = null)
     }
 }

@@ -18,5 +18,6 @@ class SaleModel(
     val saleDate: LocalDateTime,
     val salePrice: BigDecimal,
     val discount: BigDecimal,
-    val status: SaleStatus
+    val status: SaleStatus,
+    val cancellationReason: String? = null
 )

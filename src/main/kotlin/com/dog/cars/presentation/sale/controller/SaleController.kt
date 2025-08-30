@@ -12,14 +12,19 @@ class SaleController(
     private val saleCarUseCase: SaleCarUseCase,
     private val paymentUseCase: PaymentUseCase
 ) {
-    @PostMapping("/cars/{id}")
-    fun createOrder(@RequestParam id: UUID, @RequestBody body: CarSaleInput) {
-        saleCarUseCase.sale(id, body.buyerDocument, body.saleDate, body.discountAmount)
+    @PostMapping()
+    fun createSale(@RequestBody body: CarSaleInput): CarSaleOutput {
+        return saleCarUseCase.sale(body.carId, body.buyerDocument, body.saleDate, body.discountAmount).toSaleOutput()
     }
 
-    @PutMapping("{saleId}")
-    fun payOrder(@PathVariable saleId: UUID, @RequestBody body: CarSalePaymentInput): CarSalePaymentOutput {
-        return paymentUseCase.pay(saleId, body.paymentType).toCarSalePaymentOutput()
+    @PutMapping("{saleId}/payments")
+    fun createSalePayment(@PathVariable saleId: UUID, @RequestBody body: CarSalePaymentInput): CarSalePaymentOutput {
+        return paymentUseCase.createPayment(saleId, body.paymentType).toCarSalePaymentOutput()
+    }
+
+    @DeleteMapping("{saleId}")
+    fun cancelSale(@PathVariable saleId: UUID, @RequestBody body: CancelOrderInput) {
+        saleCarUseCase.cancel(saleId, body.reason)
     }
 
     @GetMapping()

@@ -2,7 +2,6 @@ package com.dog.cars.presentation.webhook.controller
 
 import com.dog.cars.infrastructure.config.MercadoPagoProperties
 import com.dog.cars.presentation.webhook.dto.WebhookNotification
-import com.dog.cars.presentation.webhook.dto.WebhookData
 import com.dog.cars.presentation.webhook.service.WebhookService
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -25,28 +24,24 @@ class WebhookController(
     fun handleMercadoPagoWebhook(
         @RequestHeader("x-signature") xSignature: String?,
         @RequestHeader("x-request-id") xRequestId: String?,
-        @RequestParam("data.id") dataId: String?,
-        @RequestBody payload: WebhookNotification
+        @RequestBody body: WebhookNotification
     ): ResponseEntity<String> {
         try {
-            logger.info("Received webhook notification: type=${payload.type}, data.id=${dataId}, x-request-id=${xRequestId}")
+            logger.info("Received webhook notification: type=${body.type}, data.id=${body.data.id}, x-request-id=${xRequestId}")
 
             if (!mercadoPagoProperties.webhookSecret.isNullOrBlank()) {
-                if (!verifySignature(xSignature, xRequestId, dataId)) {
+                if (!verifySignature(xSignature, xRequestId, body.data.id)) {
                     logger.warn("HMAC signature verification failed for webhook")
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid signature")
                 }
             }
 
-            // Process the webhook notification
-            webhookService.processNotification(payload)
+            webhookService.processNotification(body)
 
-            // Return 200 OK as required by Mercado Pago
             return ResponseEntity.ok("Webhook received successfully")
 
         } catch (e: Exception) {
             logger.error("Error processing webhook notification", e)
-            // Return 200 OK even on error to prevent retries, but log the issue
             return ResponseEntity.ok("Webhook received (with errors)")
         }
     }

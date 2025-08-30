@@ -7,6 +7,7 @@ import com.dog.cars.domain.payments.model.PaymentStatus
 import com.dog.cars.domain.payments.model.PaymentType
 import com.dog.cars.domain.payments.service.PixPaymentService
 import com.dog.cars.domain.repository.CarRepository
+import com.dog.cars.domain.repository.PaymentRepository
 import com.dog.cars.domain.repository.PersonRepository
 import com.dog.cars.domain.repository.SaleRepository
 import java.util.*
@@ -14,11 +15,13 @@ import java.util.*
 class PaymentUseCase(
     private val personRepository: PersonRepository,
     private val saleRepository: SaleRepository,
-    private val pixPaymentService: PixPaymentService
+    private val paymentRepository: PaymentRepository,
+    private val pixPaymentService: PixPaymentService,
+    private val carRepository: CarRepository
 
 ) {
 
-    fun pay(saleId: UUID, paymentType: PaymentType): Payment {
+    fun createPayment(saleId: UUID, paymentType: PaymentType): Payment {
         val sale = saleRepository.findById(saleId)
 
         if (sale.status != SaleStatus.CREATED) {
@@ -29,12 +32,14 @@ class PaymentUseCase(
             ?: throw IllegalArgumentException("Customer with document ${sale.customerDocument} not found")
 
         val payment = Payment(
+            id = UUID.randomUUID(),
             totalAmount = sale.salePrice,
             status = PaymentStatus.CREATED,
             description = "Payment for sale ${sale.id} by ${customer.name}",
             saleId = sale.id,
             type = paymentType,
             qrCode = "",
+            customerDocument = customer.document,
             items = listOf(PaymentItem(
                 id = sale.carId,
                 title = "Sale of car ${sale.carId}",
@@ -49,8 +54,52 @@ class PaymentUseCase(
 
         val updatedSale = sale.copy(status = SaleStatus.WAITING_PAYMENT, payment = updatedPayment)
 
-        saleRepository.save(updatedSale)
+        saleRepository.upsert(updatedSale)
+        paymentRepository.upsert(updatedPayment)
 
         return updatedPayment
+    }
+
+    fun confirmPayment(paymentId: UUID) {
+        val payment = paymentRepository.getById(paymentId)
+            ?: throw IllegalArgumentException("Payment with id $paymentId not found")
+
+        val sale = saleRepository.findById(payment.saleId)
+
+        val updatedPayment = payment.copy(status = PaymentStatus.APPROVED)
+        val updatedSale = sale.copy(status = SaleStatus.APPROVED, payment = updatedPayment)
+
+        saleRepository.upsert(updatedSale)
+        paymentRepository.upsert(updatedPayment)
+    }
+
+    fun rejectPayment(paymentId: UUID) {
+        val payment = paymentRepository.getById(paymentId)
+            ?: throw IllegalArgumentException("Payment with id $paymentId not found")
+
+        val updatedPayment = payment.copy(status = PaymentStatus.REJECTED)
+        paymentRepository.upsert(updatedPayment)
+    }
+
+    fun cancelPayment(paymentId: UUID) {
+        val payment = paymentRepository.getById(paymentId)
+            ?: throw IllegalArgumentException("Payment with id $paymentId not found")
+
+        val sale = saleRepository.findById(payment.saleId)
+
+        val car = carRepository.getById(sale.carId)
+            ?: throw IllegalArgumentException("Car with id ${sale.carId} not found")
+
+        if (sale.status != SaleStatus.WAITING_PAYMENT) {
+            throw IllegalStateException("Sale with id ${sale.id} is not in a valid state for payment")
+        }
+
+        val updatedPayment = payment.copy(status = PaymentStatus.CANCELLED)
+        val updatedSale = sale.copy(status = SaleStatus.CANCELLED, payment = updatedPayment)
+        car.undoSale()
+
+        paymentRepository.upsert(updatedPayment)
+        saleRepository.upsert(updatedSale)
+        carRepository.upsert(car)
     }
 }

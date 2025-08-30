@@ -8,6 +8,7 @@ import com.dog.cars.domain.car.usecase.ManageCarUseCase
 import com.dog.cars.domain.payments.service.PixPaymentService
 import com.dog.cars.domain.payments.usecase.PaymentUseCase
 import com.dog.cars.domain.person.usecase.ManageCustomerUseCase
+import com.dog.cars.domain.repository.PaymentRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -22,9 +23,10 @@ class UseCaseConfiguration {
     fun sellCarUseCase(
         carRepository: CarRepository,
         personRepository: PersonRepository,
-        saleRepository: SaleRepository
+        saleRepository: SaleRepository,
+        paymentRepository: PaymentRepository
     ): SaleCarUseCase {
-        return SaleCarUseCase(carRepository, personRepository, saleRepository)
+        return SaleCarUseCase(carRepository, personRepository, saleRepository, paymentRepository)
     }
 
     @Bean
@@ -38,8 +40,10 @@ class UseCaseConfiguration {
     fun paymentUseCase(
         personRepository: PersonRepository,
         saleRepository: SaleRepository,
-        pixPaymentService: PixPaymentService
+        pixPaymentService: PixPaymentService,
+        paymentRepository: PaymentRepository,
+        carRepository: CarRepository
     ): PaymentUseCase {
-        return PaymentUseCase(personRepository, saleRepository, pixPaymentService)
+        return PaymentUseCase(personRepository, saleRepository, paymentRepository, pixPaymentService, carRepository)
     }
 }

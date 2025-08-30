@@ -11,7 +11,7 @@ import java.util.UUID
 class SaleRepositoryImpl(
     private val saleJpaRepository: SaleJpaRepository
 ): SaleRepository {
-    override fun save(sale: Sale) {
+    override fun upsert(sale: Sale) {
         saleJpaRepository.save(sale.toSaleModel())
     }
 

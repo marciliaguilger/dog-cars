@@ -14,5 +14,6 @@ data class Sale (
     val salePrice: BigDecimal,
     val discount: BigDecimal,
     val status: SaleStatus,
-    val payment: Payment? = null
+    val payment: Payment? = null,
+    val cancellationReason: String? = null
 )

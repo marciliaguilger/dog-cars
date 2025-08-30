@@ -4,7 +4,7 @@ import com.dog.cars.domain.sales.model.Sale
 import java.util.UUID
 
 interface SaleRepository {
-    fun save(sale: Sale)
+    fun upsert(sale: Sale)
     fun findByCarId(carId: UUID): Sale?
     fun findByCustomerDocument(customerDocument: String): Collection<Sale>
     fun findById(id: UUID): Sale

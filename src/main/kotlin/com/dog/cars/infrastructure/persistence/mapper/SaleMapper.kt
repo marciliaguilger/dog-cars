@@ -23,6 +23,7 @@ fun Sale.toSaleModel(): SaleModel {
         saleDate = saleDate,
         salePrice = salePrice,
         discount = discount,
-        status = status
+        status = status,
+        cancellationReason = cancellationReason
     )
 }
