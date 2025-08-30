@@ -73,7 +73,7 @@ jobs:
       - name: Set ECR variables
         run: |
           echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> $GITHUB_ENV
-          echo "ECR_REPOSITORY=dog-cars" >> $GITHUB_ENV
+          echo "ECR_REPOSITORY=dog/dog-cars" >> $GITHUB_ENV
           echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Build, tag, and push Docker image to Amazon ECR
