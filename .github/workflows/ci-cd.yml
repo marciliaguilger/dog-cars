@@ -69,7 +69,6 @@ jobs:
 
       - name: Build, tag, and push Docker image to Amazon ECR
         env:
-          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
           ECR_REPOSITORY: dog-cars
           IMAGE_TAG: ${{ github.sha }}
         run: |
@@ -120,5 +119,4 @@ jobs:
           CONTAINER: ${{ secrets.K8S_CONTAINER_NAME }}
         run: |
           kubectl set image deployment/dog-cars dog-cars=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=${ECR_REGISTRY}/${{ secrets.ECR_REPOSITORY }}:${IMAGE_TAG}
           kubectl rollout status deployment/${DEPLOYMENT} --timeout=120s
