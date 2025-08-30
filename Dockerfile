@@ -1,11 +1,12 @@
-FROM openjdk:17-jdk-slim AS builder
+# Build stage
+FROM gradle:7.4.2-jdk17 AS build
+WORKDIR /home/gradle/src
+COPY --chown=gradle:gradle . .
+RUN gradle build --no-daemon
 
-WORKDIR /workspace
-COPY . .
-RUN ./gradlew clean build --no-daemon
-
+# Runtime stage
 FROM openjdk:17-jdk-slim
-WORKDIR /app
-COPY --from=builder /workspace/build/libs/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+RUN mkdir /app
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/app.jar
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
