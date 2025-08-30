@@ -135,5 +135,5 @@ jobs:
 
       - name: Update image to new version
         run: |
-          kubectl set image deployment/dog-cars dog-cars=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n default
-          kubectl rollout status deployment/dog-cars -n default --timeout=120s
+          kubectl set image deployment/dog-cars dog-cars=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n $NAMESPACE
+          kubectl rollout status deployment/dog-cars -n $NAMESPACE --timeout=120s
