@@ -8,7 +8,7 @@ on:
 
 env:
   APP_NAME: cars
-  JAVA_VERSION: '18'
+  JAVA_VERSION: '17'
   ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
   IMAGE_TAG: ${{ github.sha }}
@@ -31,6 +31,14 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build --no-daemon
+
+      - name: Check if JAR was created
+        run: |
+          ls -la build/libs/
+          if [ ! -f "build/libs/*.jar" ]; then
+            echo "JAR file not found!"
+            exit 1
+          fi
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
