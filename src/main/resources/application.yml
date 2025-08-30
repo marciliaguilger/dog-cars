@@ -1,20 +1,20 @@
 mercadopago:
-  collectorId: '188272254'
+  collectorId: COLLECTOR_ID
   clientId: YOUR_CLIENT_ID
-  webhookSecret: dd755ff688b85c0d236309d3fa1318c989619bbdd0fe30a6f11762f3429a9045
+  #webhookSecret:
   clientSecret: YOUR_CLIENT_SECRET
-  accessToken: TEST-7838913297242962-081820-73076caecabc290275e3775f30a8df9d-188272254
-  baseUrl: https://api.mercadopago.com
+  accessToken: ACCESS_TOKEN
+  baseUrl: MERCADO_PAGO_BASE_URL
   posExternalId: ''
   redirectUri: ''
 spring:
   application:
     name: cars
   datasource:
-    password: docker
+    password:  ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
-    username: docker
-    url: jdbc:postgresql://localhost:5432/DogCar
+    username:  ${DB_USER}
+    url:  ${DB_URL}
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,3 +23,12 @@ spring:
       hibernate:
         format_sql: 'true'
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info # Inclui os endpoints health e info
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes do health check (como status de dependências)

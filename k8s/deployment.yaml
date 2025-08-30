@@ -1,41 +1,56 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dog-cars-api
+  name: dog-cars
+  namespace: dog-cars
+  labels:
+    app: dog-cars
+    environment: development
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: dog-cars-api
+      app: dog-cars
   template:
     metadata:
       labels:
-        app: dog-cars-api
+        app: dog-cars
     spec:
-      hostname: dog-cars-api
-      serviceAccountName: dog-cars-account
       containers:
-        - name: dog-cars-api
-          image: <ACCOUNT>.dkr.ecr.us-east-1.amazonaws.com/dog-cars-api:<TAG>
+        - name: dog-cars
+          image: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/dog-cars:latest
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "250m"
+              cpu: 100m
+              memory: "1024Mi"
             limits:
-              memory: "512Mi"
-              cpu: "500m"
+              cpu: 1000m
+              memory: "2048Mi"
+          imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
           env:
             - name: AWS_REGION
-              value: ''
+              value: "us-east-1"
             - name: DB_NAME
-              value: ''
+              value: "DB_NAME_PLACEHOLDER"
             - name: DB_PORT
-              value: ''
+              value: "5432"
             - name: DB_USER
-              value: ''
+              value: "DB_USER_PLACEHOLDER"
             - name: DB_PASSWORD
-              value: ''
-            - name: DB_HOST
-              value: ''
+              value: "DB_PASSWORD_PLACEHOLDER"
+            - name: DB_URL
+              value: "DB_URL_PLACEHOLDER"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
