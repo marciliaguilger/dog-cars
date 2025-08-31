@@ -124,12 +124,22 @@ jobs:
           export AWS_ACCOUNT_ID="${{ secrets.AWS_ACCOUNT_ID }}"
           export IMAGE_TAG="${{ github.sha }}"
 
+          # Debug: mostra as variáveis exportadas
+          echo "=== DEBUG: Variables ==="
+          echo "DB_NAME: $DB_NAME"
+          echo "DB_USER: $DB_USER" 
+          echo "DB_HOST: $DB_HOST"
+          echo "AWS_ACCOUNT_ID: $AWS_ACCOUNT_ID"
+          echo "IMAGE_TAG: $IMAGE_TAG"
+          echo "========================"
+
           # Usa envsubst para substituir
           envsubst < ./k8s/deployment.template.yaml > ./k8s/deployment.yaml
           
           # Verifica se a substituição foi feita corretamente
-          echo "Generated deployment.yaml:"
+          echo "=== Generated deployment.yaml ==="
           cat ./k8s/deployment.yaml
+          echo "================================="
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4
@@ -138,7 +148,11 @@ jobs:
         run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
       - name: Apply K8s manifests
-        run: kubectl apply -f k8s/
+        run: |
+          # Aplica apenas os arquivos específicos, excluindo o template
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/deployment.yaml
 
       - name: Update image to new version
         run: |
