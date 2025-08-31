@@ -54,7 +54,15 @@ class SaleCarUseCase(
         if (customerDocument.isBlank()) {
             throw IllegalArgumentException("Buyer document cannot be blank")
         }
-        return saleRepository.findByCustomerDocument(customerDocument)
+
+        val sale = saleRepository.findByCustomerDocument(customerDocument)
+
+        val populatedSales = sale.map {
+            val payment = paymentRepository.getBySaleId(it.id)
+            it.copy(payment = payment)
+        }
+
+        return populatedSales
     }
 
     fun cancel(saleId: UUID, reason: String){
@@ -68,7 +76,7 @@ class SaleCarUseCase(
             ?: throw IllegalArgumentException("Car with id ${sale.carId} not found")
 
         val canceledSale = sale.copy(status = SaleStatus.CANCELLED, cancellationReason = reason)
-        val availableCar = car.copy(available = true)
+        val availableCar = car.copy(available = true, saleId = null)
 
         carRepository.upsert(availableCar)
         saleRepository.upsert(canceledSale)
