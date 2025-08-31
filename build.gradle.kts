@@ -54,7 +54,4 @@ tasks.withType<Test> {
 tasks.withType<Jar> {
 	enabled = true
 	archiveFileName.set("app.jar")
-	manifest {
-		attributes["Main-Class"] = "com.dog.cars.CarsApplication"
-	}
 }
