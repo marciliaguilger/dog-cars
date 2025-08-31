@@ -1,12 +1,12 @@
 mercadopago:
-  collectorId: COLLECTOR_ID
-  clientId: YOUR_CLIENT_ID
+  collectorId: 0000
+  clientId: 0000
   #webhookSecret:
-  clientSecret: YOUR_CLIENT_SECRET
+  clientSecret: 00000
   accessToken: ACCESS_TOKEN
-  baseUrl: MERCADO_PAGO_BASE_URL
-  posExternalId: ''
-  redirectUri: ''
+  baseUrl: https://api.mercadopago.com
+  posExternalId: 0000
+  redirectUri: https://api.mercadopago.com
 spring:
   application:
     name: cars
@@ -15,6 +15,13 @@ spring:
     driver-class-name: org.postgresql.Driver
     username:  ${DB_USER}
     url:  ${DB_URL}
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,6 +30,13 @@ spring:
       hibernate:
         format_sql: 'true'
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    org.springframework.boot.autoconfigure.jdbc: DEBUG
+    org.springframework.jdbc.datasource: DEBUG
+    com.zaxxer.hikari: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 management:
   endpoints:
