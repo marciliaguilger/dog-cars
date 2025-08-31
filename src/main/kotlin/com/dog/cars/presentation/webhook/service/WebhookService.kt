@@ -15,9 +15,12 @@ class WebhookService(
     fun processNotification(notification: WebhookNotification) {
         logger.info("Processing webhook notification: type=${notification.type}, id=${notification.data.id}")
 
-        when (notification.type) {
-            "payment" -> handlePaymentNotification(notification.data.id, notification.data.situation)
-            else -> logger.warn("Unknown webhook notification type: ${notification.type}")
+        when (notification.type.name.lowercase()) {
+            "payment" -> handlePaymentNotification(notification.data.id, notification.data.situation.name)
+            else -> {
+                logger.warn("Unknown webhook notification type: ${notification.type}")
+                throw Exception("Unhandled webhook type: ${notification.type}")
+            }
         }
     }
 

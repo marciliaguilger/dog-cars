@@ -18,7 +18,7 @@ class PaymentGatewayImpl(
     override fun pixPaymentGenerateQrCode(payment: Payment): PixQrCodePayment {
         if(true) {
             return PixQrCodePayment(
-                pixKey = "00020126360014BR.GOV.BCB.PIX0114+55219999999952040000530398654041.005802BR5925Nome do Recebedor6009RIO DE JANEIRO61080540900062070503***63041D3D",
+                pixKey = "00020126580014BR.GOV.BCB.PIX013660122074-73cf-4395-ab81-3ee0a14dc903520400005303986540820000.005802BR5925Dog cars6009SAO PAULO62140510to0UVLdvN46304BCA5",
                 createdDate = LocalDateTime.now(),
                 status = "PENDING",
                 type = "qr",
