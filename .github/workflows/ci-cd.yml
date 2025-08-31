@@ -81,20 +81,20 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Escape secrets for sed
-        run: |
-          echo "DB_NAME_ESCAPED=$(echo '${{ secrets.DB_NAME }}' | sed 's/[[\.*^$/]/\\&/g')" >> $GITHUB_ENV
-          echo "DB_USER_ESCAPED=$(echo '${{ secrets.DB_USER }}' | sed 's/[[\.*^$/]/\\&/g')" >> $GITHUB_ENV
-          echo "DB_PASSWORD_ESCAPED=$(echo '${{ secrets.DB_PASSWORD }}' | sed 's/[[\.*^$/]/\\&/g')" >> $GITHUB_ENV
-          echo "DB_HOST_ESCAPED=$(echo '${{ secrets.DB_HOST }}' | sed 's/[[\.*^$/]/\\&/g')" >> $GITHUB_ENV
+      - name: Install envsubst
+        run: sudo apt-get update && sudo apt-get install -y gettext
 
-      - name: Replace Env Variables in deployment.yaml
+      - name: Replace variables using envsubst
         run: |
-          sed -i "s|DB_NAME_PLACEHOLDER|$DB_NAME_ESCAPED|g" ./k8s/deployment.yaml
-          sed -i "s|DB_USER_PLACEHOLDER|$DB_USER_ESCAPED|g" ./k8s/deployment.yaml
-          sed -i "s|DB_PASSWORD_PLACEHOLDER|$DB_PASSWORD_ESCAPED|g" ./k8s/deployment.yaml
-          sed -i "s|DB_HOST_PLACEHOLDER|$DB_HOST_ESCAPED|g" ./k8s/deployment.yaml
-          sed -i "s|AWS_ACCOUNT_ID|${{ secrets.AWS_ACCOUNT_ID }}|g" ./k8s/deployment.yaml
+          # Exporta as variáveis
+          export DB_NAME="${{ secrets.DB_NAME }}"
+          export DB_USER="${{ secrets.DB_USER }}"
+          export DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
+          export DB_HOST="${{ secrets.DB_HOST }}"
+          export AWS_ACCOUNT_ID="${{ secrets.AWS_ACCOUNT_ID }}"
+
+          # Usa envsubst para substituir
+          envsubst < ./k8s/deployment.template.yaml > ./k8s/deployment.yaml
 
   deploy-eks:
     needs: docker-publish
