@@ -52,6 +52,12 @@ tasks.withType<Test> {
 }
 
 tasks.withType<Jar> {
+	enabled = false
+	archiveClassifier = ""
+}
+
+tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
 	enabled = true
 	archiveFileName.set("app.jar")
+	mainClass.set("com.dog.cars.CarsApplicationKt")
 }
