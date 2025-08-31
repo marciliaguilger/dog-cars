@@ -1,7 +1,7 @@
 package com.dog.cars.infrastructure.persistence.repository.car
 
 import com.dog.cars.domain.car.model.Car
-import com.dog.cars.domain.repository.CarRepository
+import com.dog.cars.application.port.CarRepository
 import com.dog.cars.infrastructure.persistence.mapper.toCar
 import com.dog.cars.infrastructure.persistence.mapper.toCarModel
 import org.springframework.data.repository.findByIdOrNull

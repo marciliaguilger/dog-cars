@@ -1,7 +1,7 @@
-package com.dog.cars.domain.car.usecase
+package com.dog.cars.application.usecase
 
 import com.dog.cars.domain.car.model.Car
-import com.dog.cars.domain.repository.CarRepository
+import com.dog.cars.application.port.CarRepository
 
 class ManageCarUseCase (
     private val carRepository: CarRepository

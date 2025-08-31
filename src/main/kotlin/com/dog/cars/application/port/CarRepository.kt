@@ -1,4 +1,4 @@
-package com.dog.cars.domain.repository
+package com.dog.cars.application.port
 
 import com.dog.cars.domain.car.model.Car
 import java.util.*

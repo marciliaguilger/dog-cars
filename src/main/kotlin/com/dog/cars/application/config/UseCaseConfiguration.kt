@@ -1,14 +1,15 @@
-package com.dog.cars.infrastructure.config
+package com.dog.cars.application.config
 
-import com.dog.cars.domain.repository.CarRepository
-import com.dog.cars.domain.repository.PersonRepository
-import com.dog.cars.domain.repository.SaleRepository
-import com.dog.cars.domain.sales.usecase.SaleCarUseCase
-import com.dog.cars.domain.car.usecase.ManageCarUseCase
-import com.dog.cars.domain.payments.service.PixPaymentService
-import com.dog.cars.domain.payments.usecase.PaymentUseCase
-import com.dog.cars.domain.person.usecase.ManageCustomerUseCase
-import com.dog.cars.domain.repository.PaymentRepository
+import com.dog.cars.application.port.CarRepository
+import com.dog.cars.application.port.PersonRepository
+import com.dog.cars.application.port.SaleRepository
+import com.dog.cars.application.usecase.SaleCarUseCase
+import com.dog.cars.application.usecase.ManageCarUseCase
+import com.dog.cars.application.service.PaymentService
+import com.dog.cars.application.usecase.PaymentUseCase
+import com.dog.cars.application.usecase.ManageCustomerUseCase
+import com.dog.cars.application.port.PaymentRepository
+import com.dog.cars.application.port.PaymentGateway
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -37,13 +38,18 @@ class UseCaseConfiguration {
     }
 
     @Bean
+    fun paymentService(paymentGateway: PaymentGateway): PaymentService {
+        return PaymentService(paymentGateway)
+    }
+
+    @Bean
     fun paymentUseCase(
         personRepository: PersonRepository,
         saleRepository: SaleRepository,
-        pixPaymentService: PixPaymentService,
+        paymentService: PaymentService,
         paymentRepository: PaymentRepository,
         carRepository: CarRepository
     ): PaymentUseCase {
-        return PaymentUseCase(personRepository, saleRepository, paymentRepository, pixPaymentService, carRepository)
+        return PaymentUseCase(personRepository, saleRepository, paymentRepository, paymentService, carRepository)
     }
 }

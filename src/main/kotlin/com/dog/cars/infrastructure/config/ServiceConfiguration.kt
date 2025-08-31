@@ -1,7 +1,7 @@
 package com.dog.cars.infrastructure.config
 
-import com.dog.cars.domain.payments.gateway.PaymentGateway
-import com.dog.cars.domain.payments.service.PixPaymentService
+import com.dog.cars.application.port.PaymentGateway
+import com.dog.cars.application.service.PaymentService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Configuration
 class ServiceConfiguration {
 
     @Bean
-    fun pixPaymentService(
+    fun paymentService(
         paymentGateway: PaymentGateway
-    ): PixPaymentService {
-        return PixPaymentService(paymentGateway)
+    ): PaymentService {
+        return PaymentService(paymentGateway)
     }
 }

@@ -1,22 +1,22 @@
-package com.dog.cars.domain.payments.usecase
+package com.dog.cars.application.usecase
 
 import com.dog.cars.domain.sales.enum.SaleStatus
 import com.dog.cars.domain.payments.model.Payment
 import com.dog.cars.domain.payments.model.PaymentItem
 import com.dog.cars.domain.payments.model.PaymentStatus
 import com.dog.cars.domain.payments.model.PaymentType
-import com.dog.cars.domain.payments.service.PixPaymentService
-import com.dog.cars.domain.repository.CarRepository
-import com.dog.cars.domain.repository.PaymentRepository
-import com.dog.cars.domain.repository.PersonRepository
-import com.dog.cars.domain.repository.SaleRepository
+import com.dog.cars.application.service.PaymentService
+import com.dog.cars.application.port.CarRepository
+import com.dog.cars.application.port.PaymentRepository
+import com.dog.cars.application.port.PersonRepository
+import com.dog.cars.application.port.SaleRepository
 import java.util.*
 
 class PaymentUseCase(
     private val personRepository: PersonRepository,
     private val saleRepository: SaleRepository,
     private val paymentRepository: PaymentRepository,
-    private val pixPaymentService: PixPaymentService,
+    private val paymentService: PaymentService,
     private val carRepository: CarRepository
 
 ) {
@@ -48,7 +48,7 @@ class PaymentUseCase(
             ))
         )
 
-        val pixPaymentResponse = pixPaymentService.generateQrCode(payment)
+        val pixPaymentResponse = paymentService.generateQrCode(payment)
 
         val updatedPayment = payment.copy(qrCode = pixPaymentResponse.pixKey)
 

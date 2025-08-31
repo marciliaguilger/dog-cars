@@ -1,6 +1,6 @@
 package com.dog.cars.presentation.webhook.service
 
-import com.dog.cars.domain.payments.usecase.PaymentUseCase
+import com.dog.cars.application.usecase.PaymentUseCase
 import com.dog.cars.presentation.webhook.dto.WebhookNotification
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

@@ -1,7 +1,7 @@
 package com.dog.cars.infrastructure.persistence.repository.payment
 
 import com.dog.cars.domain.payments.model.Payment
-import com.dog.cars.domain.repository.PaymentRepository
+import com.dog.cars.application.port.PaymentRepository
 import com.dog.cars.infrastructure.persistence.mapper.toDomain
 import com.dog.cars.infrastructure.persistence.mapper.toPaymentModel
 import org.springframework.stereotype.Repository

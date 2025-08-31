@@ -1,11 +1,10 @@
-package com.dog.cars.domain.repository
+package com.dog.cars.application.port
 
 import com.dog.cars.domain.payments.model.Payment
-import java.util.UUID
+import java.util.*
 
 interface PaymentRepository {
     fun upsert(payment: Payment)
+    fun getById(id: UUID): Payment?
     fun getBySaleId(saleId: UUID): Payment?
-
-    fun getById(paymentId: UUID): Payment?
 }
