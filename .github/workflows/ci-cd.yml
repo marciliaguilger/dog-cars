@@ -94,7 +94,7 @@ jobs:
           sed -i "s|DB_USER_PLACEHOLDER|$DB_USER_ESCAPED|g" ./k8s/deployment.yaml
           sed -i "s|DB_PASSWORD_PLACEHOLDER|$DB_PASSWORD_ESCAPED|g" ./k8s/deployment.yaml
           sed -i "s|DB_HOST_PLACEHOLDER|$DB_HOST_ESCAPED|g" ./k8s/deployment.yaml
-          sed -i "s|AWS_ACCOUNT_ID_PLACEHOLDER|${{ secrets.AWS_ACCOUNT_ID }}|g" ./k8s/deployment.yaml
+          sed -i "s|AWS_ACCOUNT_ID|${{ secrets.AWS_ACCOUNT_ID }}|g" ./k8s/deployment.yaml
 
   deploy-eks:
     needs: docker-publish
