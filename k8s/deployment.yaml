@@ -7,7 +7,7 @@ metadata:
     app: dog-cars
     environment: development
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: dog-cars
@@ -21,11 +21,11 @@ spec:
           image: AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/dog-cars:latest
           resources:
             requests:
-              cpu: 100m
-              memory: "1024Mi"
+              memory: "256Mi"
+              cpu: "250m"
             limits:
-              cpu: 1000m
-              memory: "2048Mi"
+              memory: "512Mi"
+              cpu: "500m"
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
