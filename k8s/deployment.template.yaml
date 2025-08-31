@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: dog-cars
-          image: ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/dog-cars:latest
+          image: ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/dog-cars:${IMAGE_TAG}
           resources:
             requests:
               memory: "256Mi"

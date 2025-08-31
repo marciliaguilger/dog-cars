@@ -76,25 +76,11 @@ jobs:
           echo "ECR_REPOSITORY=dog/dog-cars" >> $GITHUB_ENV
           echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
-      - name: Build, tag, and push Docker image to Amazon ECR
+      - name: Build, tag, and pussh Docker image to Amazon ECR
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Install envsubst
-        run: sudo apt-get update && sudo apt-get install -y gettext
-
-      - name: Replace variables using envsubst
-        run: |
-          # Exporta as variáveis
-          export DB_NAME="${{ secrets.DB_NAME }}"
-          export DB_USER="${{ secrets.DB_USER }}"
-          export DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
-          export DB_HOST="${{ secrets.DB_HOST }}"
-          export AWS_ACCOUNT_ID="${{ secrets.AWS_ACCOUNT_ID }}"
-
-          # Usa envsubst para substituir
-          envsubst < ./k8s/deployment.template.yaml > ./k8s/deployment.yaml
 
   deploy-eks:
     needs: docker-publish
@@ -123,6 +109,27 @@ jobs:
           echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> $GITHUB_ENV
           echo "ECR_REPOSITORY=dog-cars" >> $GITHUB_ENV
           echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Install envsubst
+        run: sudo apt-get update && sudo apt-get install -y gettext
+
+      - name: Replace variables using envsubst
+        run: |
+          # Exporta as variáveis
+          export DB_NAME="${{ secrets.DB_NAME }}"
+          export DB_USER="${{ secrets.DB_USER }}"
+          export DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
+          export DB_HOST="${{ secrets.DB_HOST }}"
+          export DB_URL="${{ secrets.DB_HOST }}"
+          export AWS_ACCOUNT_ID="${{ secrets.AWS_ACCOUNT_ID }}"
+          export IMAGE_TAG="${{ github.sha }}"
+
+          # Usa envsubst para substituir
+          envsubst < ./k8s/deployment.template.yaml > ./k8s/deployment.yaml
+          
+          # Verifica se a substituição foi feita corretamente
+          echo "Generated deployment.yaml:"
+          cat ./k8s/deployment.yaml
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4
