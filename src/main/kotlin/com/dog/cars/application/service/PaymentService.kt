@@ -1,8 +1,8 @@
 package com.dog.cars.application.service
 
 import com.dog.cars.application.port.PaymentGateway
-import com.dog.cars.domain.payments.model.Payment
-import com.dog.cars.domain.payments.model.PixQrCodePayment
+import com.dog.cars.domain.payments.Payment
+import com.dog.cars.domain.payments.PixQrCodePayment
 
 class PaymentService(
     private val paymentGateway: PaymentGateway

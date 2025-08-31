@@ -1,6 +1,6 @@
 package com.dog.cars.application.port
 
-import com.dog.cars.domain.sales.model.Sale
+import com.dog.cars.domain.sales.Sale
 import java.util.*
 
 interface SaleRepository {

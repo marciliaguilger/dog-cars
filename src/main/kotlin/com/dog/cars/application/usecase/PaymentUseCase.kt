@@ -1,10 +1,10 @@
 package com.dog.cars.application.usecase
 
 import com.dog.cars.domain.sales.enum.SaleStatus
-import com.dog.cars.domain.payments.model.Payment
-import com.dog.cars.domain.payments.model.PaymentItem
-import com.dog.cars.domain.payments.model.PaymentStatus
-import com.dog.cars.domain.payments.model.PaymentType
+import com.dog.cars.domain.payments.Payment
+import com.dog.cars.domain.payments.PaymentItem
+import com.dog.cars.domain.payments.PaymentStatus
+import com.dog.cars.domain.payments.PaymentType
 import com.dog.cars.application.service.PaymentService
 import com.dog.cars.application.port.CarRepository
 import com.dog.cars.application.port.PaymentRepository

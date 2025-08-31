@@ -1,6 +1,6 @@
 package com.dog.cars.application.port
 
-import com.dog.cars.domain.payments.model.Payment
+import com.dog.cars.domain.payments.Payment
 import java.util.*
 
 interface PaymentRepository {

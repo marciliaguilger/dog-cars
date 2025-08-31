@@ -1,6 +1,6 @@
 package com.dog.cars.application.usecase
 
-import com.dog.cars.domain.person.model.Person
+import com.dog.cars.domain.person.Person
 import com.dog.cars.application.port.PersonRepository
 
 class ManageCustomerUseCase(

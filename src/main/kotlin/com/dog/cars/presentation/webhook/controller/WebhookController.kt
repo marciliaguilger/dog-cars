@@ -2,7 +2,7 @@ package com.dog.cars.presentation.webhook.controller
 
 import com.dog.cars.infrastructure.config.MercadoPagoProperties
 import com.dog.cars.presentation.webhook.dto.WebhookNotification
-import com.dog.cars.presentation.webhook.service.WebhookService
+import com.dog.cars.application.service.WebhookService
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

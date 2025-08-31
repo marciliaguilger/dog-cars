@@ -1,9 +1,9 @@
 package com.dog.cars.presentation.sale.dto
 
-import com.dog.cars.domain.payments.model.PaymentStatus
-import com.dog.cars.domain.payments.model.PaymentType
+import com.dog.cars.domain.payments.PaymentStatus
+import com.dog.cars.domain.payments.PaymentType
 import com.dog.cars.domain.sales.enum.SaleStatus
-import com.dog.cars.domain.sales.model.Sale
+import com.dog.cars.domain.sales.Sale
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
