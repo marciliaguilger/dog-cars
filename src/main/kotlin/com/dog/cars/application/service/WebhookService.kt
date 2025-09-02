@@ -1,6 +1,7 @@
 package com.dog.cars.application.service
 
 import com.dog.cars.application.usecase.PaymentUseCase
+import com.dog.cars.presentation.webhook.dto.Situation
 import com.dog.cars.presentation.webhook.dto.WebhookNotification
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -16,7 +17,7 @@ class WebhookService(
         logger.info("Processing webhook notification: type=${notification.type}, id=${notification.data.id}")
 
         when (notification.type.name.lowercase()) {
-            "payment" -> handlePaymentNotification(notification.data.id, notification.data.situation.name)
+            "payment" -> handlePaymentUpdate(notification)
             else -> {
                 logger.warn("Unknown webhook notification type: ${notification.type}")
                 throw Exception("Unhandled webhook type: ${notification.type}")
@@ -29,11 +30,11 @@ class WebhookService(
             val paymentId = UUID.fromString(notification.data.id)
             
             when (notification.data.situation) {
-                "approved" -> {
+                Situation.APPROVED -> {
                     paymentUseCase.confirmPayment(paymentId)
                     logger.info("Payment confirmed: $paymentId")
                 }
-                "rejected", "cancelled" -> {
+                Situation.REJECTED, Situation.CANCELLED -> {
                     paymentUseCase.rejectPayment(paymentId)
                     logger.info("Payment rejected: $paymentId")
                 }
