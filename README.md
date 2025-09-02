@@ -89,10 +89,7 @@ cd dog-cars
 
 2. **Configure as variáveis de ambiente**:
 ```bash
-export DB_URL="jdbc:postgresql://localhost:5432/dog_cars"
-export DB_USER="postgres"
-export DB_PASSWORD="sua_senha"
-export DB_NAME="dog_cars"
+export SPRING_PROFILES_ACTIVE=development
 ```
 
 3. **Execute a aplicação**:

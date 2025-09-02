@@ -11,10 +11,10 @@ spring:
   application:
     name: cars
   datasource:
-    password:  ${DB_PASSWORD}
+    password:  docker
     driver-class-name: org.postgresql.Driver
-    username:  ${DB_USER}
-    url:  ${DB_URL}
+    username: docker
+    url: jdbc:postgresql://localhost:5432/DogCar
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
