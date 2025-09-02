@@ -1,7 +1,7 @@
 package com.dog.cars.presentation.sale.controller
 
-import com.dog.cars.domain.sales.usecase.SaleCarUseCase
-import com.dog.cars.domain.payments.usecase.PaymentUseCase
+import com.dog.cars.application.usecase.SaleCarUseCase
+import com.dog.cars.application.usecase.PaymentUseCase
 import com.dog.cars.presentation.sale.dto.*
 import org.springframework.web.bind.annotation.*
 import java.util.*

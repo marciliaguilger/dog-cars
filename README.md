@@ -11,32 +11,65 @@ Sistema de vendas de carros com integração ao Mercado Pago, desenvolvido em Ko
 - **Webhooks**: Processamento de notificações do Mercado Pago
 - **Health Checks**: Monitoramento via Spring Boot Actuator
 
-## 🛠️ Tecnologias
+## 🛠️ Stack Tecnológico
 
+### Backend
 - **Kotlin** + **Spring Boot 3.5**
-- **PostgreSQL** (banco de dados)
+- **Clean Architecture** (Domain-Driven Design)
 - **Spring Data JPA** (persistência)
 - **Spring Cloud OpenFeign** (integração HTTP)
-- **Mercado Pago API** (pagamentos)
-- **Docker** + **Kubernetes** (deploy)
-- **AWS ECR** + **EKS** (infraestrutura)
+- **Spring Boot Actuator** (observabilidade)
 
-## 📁 Estrutura do Projeto
+### Banco de Dados
+- **PostgreSQL** (produção)
+- **JPA/Hibernate** (ORM)
+
+### Integrações
+- **Mercado Pago API** (pagamentos PIX)
+- **Webhooks** (notificações assíncronas)
+
+### DevOps & Deploy
+- **Docker** (containerização)
+- **Kubernetes** (orquestração)
+- **AWS ECR** (registry de imagens)
+- **AWS EKS** (cluster Kubernetes)
+- **GitHub Actions** (CI/CD)
+
+## 🏗️ Arquitetura - Clean Architecture
+
+O projeto segue os princípios da **Clean Architecture** com separação clara de responsabilidades:
 
 ```
 src/main/kotlin/com/dog/cars/
-├── domain/           # Regras de negócio
-│   ├── car/         # Domínio de carros
-│   ├── payments/    # Domínio de pagamentos
-│   ├── person/      # Domínio de pessoas
-│   └── sales/       # Domínio de vendas
-├── infrastructure/  # Configurações e integrações
-└── presentation/    # Controllers e DTOs
-    ├── car/
-    ├── customer/
-    ├── sale/
-    └── webhook/
+├── domain/              # 🎯 Camada de Domínio (Entities + Business Rules)
+│   ├── car/model/      # Entidades de Carro
+│   ├── payments/model/ # Entidades de Pagamento
+│   ├── person/model/   # Entidades de Pessoa
+│   └── sales/model/    # Entidades de Venda
+├── application/         # 🔄 Camada de Aplicação (Use Cases + Ports)
+│   ├── usecase/        # Casos de Uso
+│   ├── port/           # Interfaces (Ports)
+│   ├── service/        # Serviços de Aplicação
+│   └── config/         # Configuração de DI
+├── infrastructure/      # 🔧 Camada de Infraestrutura (Adapters)
+│   ├── persistence/    # Adaptadores de Persistência
+│   ├── web/           # Adaptadores Web (HTTP, Feign)
+│   └── config/        # Configurações de Infraestrutura
+└── presentation/        # 🌐 Camada de Apresentação (Controllers + DTOs)
+    ├── car/controller/
+    ├── customer/controller/
+    ├── sale/controller/
+    └── webhook/controller/
 ```
+
+### 📋 Princípios Aplicados
+
+- ✅ **Dependency Rule**: Dependências apontam sempre para dentro
+- ✅ **Separation of Concerns**: Cada camada tem responsabilidade específica
+- ✅ **Ports & Adapters**: Interfaces definem contratos, implementações são intercambiáveis
+- ✅ **Domain Purity**: Domínio sem dependências externas
+
+> 📖 **Documentação completa**: Veja [CLEAN_ARCHITECTURE.md](./CLEAN_ARCHITECTURE.md)
 
 ## 🚀 Executar Localmente
 
@@ -56,10 +89,7 @@ cd dog-cars
 
 2. **Configure as variáveis de ambiente**:
 ```bash
-export DB_URL="jdbc:postgresql://localhost:5432/dog_cars"
-export DB_USER="postgres"
-export DB_PASSWORD="sua_senha"
-export DB_NAME="dog_cars"
+export SPRING_PROFILES_ACTIVE=development
 ```
 
 3. **Execute a aplicação**:

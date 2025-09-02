@@ -1,6 +1,6 @@
 package com.dog.cars.presentation.customer.controller
 
-import com.dog.cars.domain.person.usecase.ManageCustomerUseCase
+import com.dog.cars.application.usecase.ManageCustomerUseCase
 import com.dog.cars.presentation.customer.dto.CustomerInput
 import com.dog.cars.presentation.customer.dto.CustomerOutput
 import com.dog.cars.presentation.customer.dto.toCustomerOutput
@@ -15,11 +15,11 @@ class CustomerController(
 
     @PostMapping
     fun createCustomer(@RequestBody customer: CustomerInput){
-        manageCustomerUseCase.create(customer.toPerson())
+        manageCustomerUseCase.execute(customer.toPerson())
     }
 
     @GetMapping("/{document}")
     fun getCustomer(@PathVariable document: String): CustomerOutput {
-        return manageCustomerUseCase.getByDocument(document).toCustomerOutput()
+        return manageCustomerUseCase.getByDocument(document)!!.toCustomerOutput()
     }
 }

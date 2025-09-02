@@ -1,8 +1,8 @@
 package com.dog.cars.presentation.sale.dto
 
-import com.dog.cars.domain.payments.model.Payment
-import com.dog.cars.domain.payments.model.PaymentStatus
-import com.dog.cars.domain.payments.model.PaymentType
+import com.dog.cars.domain.payments.Payment
+import com.dog.cars.domain.payments.PaymentStatus
+import com.dog.cars.domain.payments.PaymentType
 import java.util.*
 
 data class CarSalePaymentOutput(

@@ -124,6 +124,12 @@ jobs:
           export AWS_ACCOUNT_ID="${{ secrets.AWS_ACCOUNT_ID }}"
           export IMAGE_TAG="${{ github.sha }}"
 
+          # Encode secrets to base64 for Secret manifest
+          export DB_NAME_B64=$(echo -n "$DB_NAME" | base64 -w 0)
+          export DB_USER_B64=$(echo -n "$DB_USER" | base64 -w 0)
+          export DB_PASSWORD_B64=$(echo -n "$DB_PASSWORD" | base64 -w 0)
+          export DB_URL_B64=$(echo -n "$DB_URL" | base64 -w 0)
+
           # Debug: mostra as variáveis exportadas
           echo "=== DEBUG: Variables ==="
           echo "DB_NAME: $DB_NAME"
@@ -133,8 +139,10 @@ jobs:
           echo "IMAGE_TAG: $IMAGE_TAG"
           echo "========================"
 
-          # Usa envsubst para substituir
+          # Usa envsubst para substituir templates
           envsubst < ./k8s/deployment.template.yaml > ./k8s/deployment.yaml
+          envsubst < ./k8s/configmap.template.yaml > ./k8s/configmap.yaml
+          envsubst < ./k8s/secret.template.yaml > ./k8s/secret.yaml
           
           # Verifica se a substituição foi feita corretamente
           echo "=== Generated deployment.yaml ==="
@@ -149,8 +157,10 @@ jobs:
 
       - name: Apply K8s manifests
         run: |
-          # Aplica apenas os arquivos específicos, excluindo o template
+          # Aplica os arquivos na ordem correta
           kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/secret.yaml
           kubectl apply -f k8s/service.yaml
           kubectl apply -f k8s/deployment.yaml
 

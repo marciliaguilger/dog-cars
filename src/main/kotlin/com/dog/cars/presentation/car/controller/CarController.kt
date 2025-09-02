@@ -1,6 +1,6 @@
 package com.dog.cars.presentation.car.controller
 
-import com.dog.cars.domain.car.usecase.ManageCarUseCase
+import com.dog.cars.application.usecase.ManageCarUseCase
 import com.dog.cars.presentation.car.dto.CarInput
 import com.dog.cars.presentation.car.dto.CarOutput
 import com.dog.cars.presentation.car.dto.toDomain

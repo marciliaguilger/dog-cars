@@ -1,0 +1,48 @@
+mercadopago:
+  collectorId: 0000
+  clientId: 0000
+  #webhookSecret:
+  clientSecret: 00000
+  accessToken: ACCESS_TOKEN
+  baseUrl: https://api.mercadopago.com
+  posExternalId: 0000
+  redirectUri: https://api.mercadopago.com
+spring:
+  application:
+    name: cars
+  datasource:
+    password:  docker
+    driver-class-name: org.postgresql.Driver
+    username: docker
+    url: jdbc:postgresql://localhost:5432/DogCar
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+    properties:
+      hibernate:
+        format_sql: 'true'
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    org.springframework.boot.autoconfigure.jdbc: DEBUG
+    org.springframework.jdbc.datasource: DEBUG
+    com.zaxxer.hikari: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info # Inclui os endpoints health e info
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes do health check (como status de dependências)

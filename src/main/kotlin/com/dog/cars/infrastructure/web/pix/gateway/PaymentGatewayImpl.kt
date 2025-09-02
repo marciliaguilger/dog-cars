@@ -1,8 +1,8 @@
 package com.dog.cars.infrastructure.web.pix.gateway
 
-import com.dog.cars.domain.payments.gateway.PaymentGateway
-import com.dog.cars.domain.payments.model.Payment
-import com.dog.cars.domain.payments.model.PixQrCodePayment
+import com.dog.cars.application.port.PaymentGateway
+import com.dog.cars.domain.payments.Payment
+import com.dog.cars.domain.payments.PixQrCodePayment
 import com.dog.cars.infrastructure.web.pix.MercadoPagoOrderQrClient
 import com.dog.cars.infrastructure.config.MercadoPagoProperties
 import com.dog.cars.infrastructure.web.pix.dto.*

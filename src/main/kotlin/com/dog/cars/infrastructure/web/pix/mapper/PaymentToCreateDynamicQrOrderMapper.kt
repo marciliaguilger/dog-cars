@@ -1,6 +1,6 @@
 package com.dog.cars.infrastructure.web.pix.mapper
 
-import com.dog.cars.domain.payments.model.Payment
+import com.dog.cars.domain.payments.Payment
 import com.dog.cars.infrastructure.config.MercadoPagoProperties
 import com.dog.cars.infrastructure.web.pix.dto.CreateDynamicQrOrderRequest
 import com.dog.cars.infrastructure.web.pix.dto.DynamicQrCashOut
